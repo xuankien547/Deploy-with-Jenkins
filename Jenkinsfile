@@ -1,14 +1,14 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('xuankien547-dockerhub')
+        dockerhub = credentials('xuankien547-dockerhub')
     }
    
     stages {
         
          stage('Build docker file') {
             steps {
-              sh 'docker-compose build'                
+              sh 'docker build -t nginx-custom:latest                
                  
             }
         }
@@ -16,16 +16,17 @@ pipeline {
     
     stage('Login Dockerhub') {
       steps{
-        withCredentials([usernamePassword(credentialsId: 'xuankien547-dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) 
-          sh 'docker login -u $DOCKER_USERNAME --password-stdin'
+        // withCredentials([usernamePassword(credentialsId: 'xuankien547-dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) 
+          sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
         
       }
     }
     
     stage('Push Dockerhub') {
         steps {
-            sh 'docker push xuankien547/jenkins-build-nginx:latest'
-            sh 'docker push xuankien547/jenkins-build-php:latest'
+            // sh 'docker push xuankien547/jenkins-build-nginx:latest'
+            // sh 'docker push xuankien547/jenkins-build-php:latest'
+            sh 'docker push xuankien547/nginx-custom:latest'
         }
     }
     
