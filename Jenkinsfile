@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        lable 'linux'
-    }
+    agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('xuankien547-dockerhub')
     }
