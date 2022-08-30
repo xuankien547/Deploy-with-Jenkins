@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo "1. pre build step"
+      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 666665132412.dkr.ecr.ap-southeast-1.amazonaws.com
+  build:
+    commands:
+      - echo "2. Build step"
+      - docker-compose -f docker-compose.yml build
+  post_build:
+    commands:
+      - echo 3. "Post build"
+      - docker tag nginx-push-ecr:latest 666665132412.dkr.ecr.ap-southeast-1.amazonaws.com/nginx-push-ecr:latest
+      - docker push 666665132412.dkr.ecr.ap-southeast-1.amazonaws.com/nginx-push-ecr:latest
+      - docker tag php-push-ecr:latest 666665132412.dkr.ecr.ap-southeast-1.amazonaws.com/php-push-ecr:latest
+      - docker push 666665132412.dkr.ecr.ap-southeast-1.amazonaws.com/php-push-ecr:latest
+
+artifacts:
+  files:
+    - README.md
