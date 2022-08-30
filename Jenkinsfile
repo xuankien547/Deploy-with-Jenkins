@@ -1,35 +1,35 @@
 pipeline {
-    agent any
+    agent {
+        lable 'linux'
+    }
     environment {
-        AWS_ACCOUNT_ID="666665132412"
-        AWS_DEFAULT_REGION="ap-southeast-1" 
-        IMAGE_REPO_NAME_NGINX="jenkins-build-nginx"
-        IMAGE_NGINX_TAG="latest"
-        REPOSITORY_NGINX_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME_NGINX}"
-        IMAGE_REPO_NAME_PHP="jenkins-build-php"
-        IMAGE_PHP_TAG="latest"
-        REPOSITORY_PHP_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME_PHP}"
+        DOCKERHUB_CREDENTIALS = credentials('xuankien547-dockerhub')
     }
    
     stages {
         
-        //  stage('Logging into AWS ECR') {
-        //     steps {
-        //         script {
-        //         sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-        //         }
+         stage('Build docker file') {
+            steps {
+              sh 'docker-compose build'                
                  
-        //     }
-        // }
-        
-    // Building Docker images
-    stage('Building image') {
-      steps{
-        script {
-          sh "docker-compose -f docker-compose.yml build"
+            }
         }
+        
+    
+    stage('Login Dockerhub') {
+      steps{
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+        
       }
     }
+    
+    stage('Push Dockerhub') {
+        steps {
+            sh 'docker push xuankien547/jenkins-build-nginx:latest'
+            sh 'docker push xuankien547/jenkins-build-php:latest'
+        }
+    }
+    
    
     // Uploading Docker images into AWS ECR
     // stage('Pushing to ECR') {
