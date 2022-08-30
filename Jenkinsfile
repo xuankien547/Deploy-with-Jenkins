@@ -8,7 +8,7 @@ pipeline {
         
          stage('Build docker file') {
             steps {
-              sh 'docker build -t nginx-custom:latest .'              
+              sh 'docker build -t nginx-custom:v1 .'              
                  
             }
         }
@@ -26,7 +26,8 @@ pipeline {
         steps {
             // sh 'docker push xuankien547/jenkins-build-nginx:latest'
             // sh 'docker push xuankien547/jenkins-build-php:latest'
-            sh 'docker push xuankien547/nginx-custom:latest'
+            sh 'docker tag nginx-custom:v1 xuankien547/nginx-custom:v1' 
+            sh 'docker push xuankien547/nginx-custom:v1'
         }
     }
     
