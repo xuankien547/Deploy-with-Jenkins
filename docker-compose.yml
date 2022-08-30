@@ -2,7 +2,7 @@ version: "3.3"
 services:
   nginx:
     container_name: nginx-custom
-    image: nginx-push-ecr:latest
+    image: jenkins-build-nginx:latest #nginx-push-ecr
     build:
       context: .
       dockerfile: ./Dockerfile.nginx
@@ -19,7 +19,7 @@ services:
 
   php:
     container_name: php
-    image: php-push-ecr:latest
+    image: jenkins-build-php:latest #php-push-ecr
     build:
       context: .
       dockerfile: ./Dockerfile.php
