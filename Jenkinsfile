@@ -2,15 +2,16 @@ pipeline {
     agent any
     environment {
         dockerhub = credentials('xuankien547-dockerhub')
-        PATH = "$PATH:/usr/local/bin/docker-compose"
+        PATH = "$PATH:/usr/local/bin"
     }
    
     stages {
         
          stage('Build docker file') {
             steps {
-            //   sh 'docker build -t nginx-custom:v1 .'         
-                 sh 'docker-compose build'
+            //   sh 'docker build -t nginx-custom:v1 .'  
+                 echo "PATH is: $PATH"       
+                 sh '/usr/bin/docker-compose build'
             }
         }
         
