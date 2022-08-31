@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         dockerhub = credentials('xuankien547-dockerhub')
+        PATH = "$PATH:/usr/local/bin/docker-compose"
     }
    
     stages {
@@ -9,7 +10,7 @@ pipeline {
          stage('Build docker file') {
             steps {
             //   sh 'docker build -t nginx-custom:v1 .'         
-                 sh 'docker-compose -f /var/jenkins_home/jobs/web-service/docker-compose.yml build'
+                 sh 'docker-compose build'
             }
         }
         
