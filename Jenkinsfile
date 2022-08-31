@@ -23,7 +23,7 @@ pipeline {
         
       }
     }
-    }
+    
     
     stage('Push Dockerhub') {
         steps {
@@ -47,3 +47,4 @@ pipeline {
     //     }
     //   }
     }
+}
