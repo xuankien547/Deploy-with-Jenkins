@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         dockerhub = credentials('xuankien547-dockerhub')
-        PATH = "$PATH:/usr/local/bin"
+        PATH = "$PATH:/var/jenkins_home/jobs/web-service/workspace"
     }
    
     stages {
@@ -11,7 +11,7 @@ pipeline {
             steps {
             //   sh 'docker build -t nginx-custom:v1 .'  
                  echo "PATH is: $PATH"       
-                 sh '/usr/bin/docker-compose build'
+                 sh '/var/jenkins_home/jobs/web-service/workspace/docker-compose build'
             }
         }
         
