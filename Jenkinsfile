@@ -22,15 +22,16 @@ pipeline {
         
       }
     }
-    
-    stage('Push Dockerhub') {
-        steps {
-            // sh 'docker push xuankien547/jenkins-build-nginx:latest'
-            // sh 'docker push xuankien547/jenkins-build-php:latest'
-            // sh 'docker tag nginx-custom:v1 xuankien547/nginx-custom:v1' 
-            // sh 'docker push xuankien547/nginx-custom:v1'
-        }
     }
+    
+    // stage('Push Dockerhub') {
+    //     steps {
+    //         sh 'docker push xuankien547/jenkins-build-nginx:latest'
+    //         sh 'docker push xuankien547/jenkins-build-php:latest'
+    //         sh 'docker tag nginx-custom:v1 xuankien547/nginx-custom:v1' 
+    //         sh 'docker push xuankien547/nginx-custom:v1'
+    //     }
+    // }
     
    
     // Uploading Docker images into AWS ECR
