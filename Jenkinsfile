@@ -2,16 +2,16 @@ pipeline {
     agent any
     environment {
         dockerhub = credentials('xuankien547-dockerhub')
-        PATH = "$PATH:/usr/bin"
+        // PATH = "$PATH:/usr/bin"
     }
    
     stages {
         
          stage('Build docker file') {
             steps {
-            //   sh 'docker build -t nginx-custom:v1 .'  
-                 echo "PATH is: $PATH"       
-                 sh '/usr/bin/docker-compose build'
+              sh 'docker build -t nginx-custom:v1 .'  
+                //  echo "PATH is: $PATH"       
+                //  sh '/usr/bin/docker-compose build'
             }
         }
         
@@ -25,14 +25,14 @@ pipeline {
     }
     }
     
-    // stage('Push Dockerhub') {
-    //     steps {
-    //         sh 'docker push xuankien547/jenkins-build-nginx:latest'
-    //         sh 'docker push xuankien547/jenkins-build-php:latest'
-    //         sh 'docker tag nginx-custom:v1 xuankien547/nginx-custom:v1' 
-    //         sh 'docker push xuankien547/nginx-custom:v1'
-    //     }
-    // }
+    stage('Push Dockerhub') {
+        steps {
+            // sh 'docker push xuankien547/jenkins-build-nginx:latest'
+            // sh 'docker push xuankien547/jenkins-build-php:latest'
+            sh 'docker tag nginx-custom:v1 xuankien547/nginx-custom:v1' 
+            sh 'docker push xuankien547/nginx-custom:v1'
+        }
+    }
     
    
     // Uploading Docker images into AWS ECR
