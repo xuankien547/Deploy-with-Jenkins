@@ -8,8 +8,8 @@ pipeline {
         
          stage('Build docker file') {
             steps {
-              sh 'docker build -t nginx-custom:v1 .'              
-                 
+            //   sh 'docker build -t nginx-custom:v1 .'              
+                 sh 'docker-compose build'
             }
         }
         
