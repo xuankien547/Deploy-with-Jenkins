@@ -8,9 +8,8 @@ pipeline {
         
          stage('Build docker file') {
             steps {
-            //   sh 'docker build -t nginx-custom:v1 .'  
-                 sh 'cd /var/jenkins_home/jobs/web-service/'            
-                 sh 'docker-compose build'
+            //   sh 'docker build -t nginx-custom:v1 .'         
+                 sh 'docker-compose -f /var/jenkins_home/jobs/web-service/docker-compose.yml build'
             }
         }
         
